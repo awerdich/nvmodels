@@ -40,7 +40,8 @@ COPY setup.py ./
 COPY src/nvmodels/__init__.py src/nvmodels/__init__.py
 
 # Install dependencies into system python
-RUN python -m pip install -e .
+RUN --mount=source=.git,target=.git,type=bind \
+    python -m pip install -e .
 RUN python -m pip install -U jupyterlab
 
 
