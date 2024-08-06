@@ -39,18 +39,10 @@ RUN pip install pipenv
 COPY setup.py ./
 COPY src/nvmodels/__init__.py src/nvmodels/__init__.py
 
-# Install dependencies into system python
+# Install additional dependencies into system python
 RUN --mount=source=.git,target=.git,type=bind \
-    python -m pip install -e .
+    pip install --no-cache-dir -e .
 RUN python -m pip install -U jupyterlab
-
-
-# COPY Pipfile Pipfile.lock ./
-# RUN pipenv install --system --deploy --ignore-pipfile --dev
-# This allows the version to be inferred properly form inside the container 
-# without copying the entire .git folder 
-# RUN --mount=source=.git,target=.git,type=bind \
-#     pipenv install --system --deploy --ignore-pipfile --dev
 
 # Run the jupyter lab server
 RUN mkdir -p /run_scripts
